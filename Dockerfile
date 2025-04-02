@@ -1,5 +1,5 @@
 # Use the official Flutter SDK image with a specific version
-FROM cirrusci/flutter:3.19.0
+FROM cirrusci/flutter:stable
 
 # Create a non-root user
 RUN useradd -m -s /bin/bash flutter
