@@ -1,5 +1,6 @@
 services:
   media-player:
+    container_name: media-player
     image: ghcr.io/kiria-f/allrensys-media-player:latest
     networks:
       - proxy
