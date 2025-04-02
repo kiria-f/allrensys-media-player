@@ -29,6 +29,10 @@ FROM nginx:alpine
 # Copy the built application from the previous stage
 COPY --from=0 /app/build/web /usr/share/nginx/html
 
+# Create the audio directory and copy audio files
+RUN mkdir -p /usr/share/nginx/html/assets/audio
+COPY --from=0 /app/assets/audio /usr/share/nginx/html/assets/audio
+
 # Expose port 80
 EXPOSE 80
 
