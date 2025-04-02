@@ -3,8 +3,8 @@ FROM ghcr.io/cirruslabs/flutter:stable
 
 # Create a non-root user
 RUN useradd -m -s /bin/bash flutter && \
-    chown -R flutter:flutter /usr/local/flutter && \
-    git config --global --add safe.directory /usr/local/flutter
+    chown -R flutter:flutter /sdks/flutter && \
+    git config --global --add safe.directory /sdks/flutter
 
 USER flutter
 
