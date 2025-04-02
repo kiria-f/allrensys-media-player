@@ -1,17 +1,21 @@
-# Use the official Flutter SDK image
-FROM cirrusci/flutter:stable
+# Use the official Flutter SDK image with a specific version
+FROM cirrusci/flutter:3.19.0
+
+# Create a non-root user
+RUN useradd -m -s /bin/bash flutter
+USER flutter
 
 # Set working directory
 WORKDIR /app
 
 # Copy pubspec files
-COPY pubspec.yaml pubspec.lock ./
+COPY --chown=flutter:flutter pubspec.yaml pubspec.lock ./
 
 # Install dependencies
 RUN flutter pub get
 
 # Copy the rest of the application
-COPY . .
+COPY --chown=flutter:flutter . .
 
 # Build the application
 RUN flutter build web
