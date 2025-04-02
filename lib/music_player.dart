@@ -21,6 +21,7 @@ class MusicPlayer {
 
   MusicPlayer() {
     _setupListeners();
+    _audioPlayer.setLoopMode(LoopMode.all); // Set infinite loop
   }
 
   void _setupListeners() {
