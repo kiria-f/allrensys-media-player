@@ -1,10 +1,10 @@
-# Use the official Flutter SDK image with a specific version
-FROM cirrusci/flutter:stable
+# Use the official Flutter SDK image
+FROM flutter:stable
 
 # Create a non-root user
 RUN useradd -m -s /bin/bash flutter && \
-    chown -R flutter:flutter /sdks/flutter && \
-    git config --global --add safe.directory /sdks/flutter
+    chown -R flutter:flutter /usr/local/flutter && \
+    git config --global --add safe.directory /usr/local/flutter
 
 USER flutter
 
