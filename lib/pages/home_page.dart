@@ -4,6 +4,41 @@ import 'package:flutter/services.dart';
 import '../music_player.dart';
 import '../widgets/wave_animation.dart';
 
+class VerticalTextTape extends StatelessWidget {
+  final List<String> slogans;
+  final bool isLeft;
+
+  const VerticalTextTape({super.key, required this.slogans, this.isLeft = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
+      left: isLeft ? 0 : null,
+      right: isLeft ? null : 0,
+      bottom: 0,
+      child: Center(
+        child: RotatedBox(
+          quarterTurns: isLeft ? 1 : 3,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+                  slogans.map((slogan) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(slogan, style: TextStyle(fontSize: 14, color: Color(0xFF4A3F35).withAlpha(128), fontFamily: 'Montserrat', letterSpacing: 2)),
+                    );
+                  }).toList(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -228,6 +263,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+          ),
+          // Vertical text tapes
+          VerticalTextTape(
+            slogans: ['NO REGISTRATION', 'NO ACCOUNTS', 'NO AUTHORIZATION', 'NO LOGIN', 'NO REGISTRATION', 'NO ACCOUNTS', 'NO AUTHORIZATION', 'NO LOGIN'],
+            isLeft: true,
+          ),
+          VerticalTextTape(
+            slogans: [
+              'JUST PLAY',
+              'JUST FOCUS',
+              'JUST STUDY',
+              'JUST RELAX',
+              'JUST FLOW',
+              'JUST ENJOY',
+              'JUST PLAY',
+              'JUST FOCUS',
+              'JUST STUDY',
+              'JUST RELAX',
+              'JUST FLOW',
+              'JUST ENJOY',
+            ],
+            isLeft: false,
           ),
         ],
       ),
