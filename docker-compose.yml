@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  web:
+    image: ghcr.io/kiria-f/music_streamer:latest
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.music-streamer.rule=Host(`allrensys.com`)"
+      - "traefik.http.routers.music-streamer.entrypoints=web"
+      - "traefik.http.services.music-streamer.loadbalancer.server.port=80"
+    environment:
+      - FLUTTER_WEB_RELEASE=true
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true 
