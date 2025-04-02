@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../music_player.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -10,16 +12,42 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<ImageProvider> _noiseImageFuture;
+  late MusicPlayer _musicPlayer;
+  bool _isPlaying = false;
 
   @override
   void initState() {
     super.initState();
     _noiseImageFuture = _loadNoiseImage();
+    _musicPlayer = MusicPlayer();
+    _setupMusicPlayerListener();
+  }
+
+  void _setupMusicPlayerListener() {
+    _musicPlayer.isPlayingStream.listen((isPlaying) {
+      setState(() {
+        _isPlaying = isPlaying;
+      });
+    });
   }
 
   Future<ImageProvider> _loadNoiseImage() async {
     final ByteData data = await rootBundle.load('assets/images/light_noise_transparent.png');
     return MemoryImage(data.buffer.asUint8List());
+  }
+
+  void _togglePlay() async {
+    if (_isPlaying) {
+      await _musicPlayer.pause();
+    } else {
+      await _musicPlayer.play('assets/audio/lofi1.mp3');
+    }
+  }
+
+  @override
+  void dispose() {
+    _musicPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -158,15 +186,13 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.play_arrow_rounded, size: 60, color: Color(0xFFF8E9D2)),
-                          onPressed: () {
-                            // TODO: Implement play functionality
-                          },
+                          icon: Icon(_isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, size: 60, color: Color(0xFFF8E9D2)),
+                          onPressed: _togglePlay,
                         ),
                       ),
                       const SizedBox(height: 40),
                       Text(
-                        'Press play to begin your journey',
+                        _isPlaying ? 'Now playing...' : 'Press play to begin your journey',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, color: Color(0xFF4A3F35).withAlpha(179), fontFamily: 'Montserrat'),
                       ),
