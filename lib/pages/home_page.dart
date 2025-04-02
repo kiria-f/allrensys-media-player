@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Your Perfect Study Companion',
+                        'Your Perfect Hobby Companion',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 24, color: Color(0xFF4A3F35), fontFamily: 'Montserrat'),
                       ),
