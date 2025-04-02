@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   late Future<ImageProvider> _noiseImageFuture;
   late MusicPlayer _musicPlayer;
   bool _isPlaying = false;
+  bool _isHovered = false;
 
   @override
   void initState() {
@@ -178,17 +179,34 @@ class _HomePageState extends State<HomePage> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         height: MediaQuery.of(context).size.width * 0.3,
                         constraints: BoxConstraints(maxWidth: 120, maxHeight: 120),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFF4A3F35),
-                          boxShadow: [
-                            BoxShadow(color: Color(0xFF4A3F35).withAlpha(77), blurRadius: 20, spreadRadius: 5),
-                            BoxShadow(color: Color(0xFFF8E9D2).withAlpha(128), blurRadius: 10, spreadRadius: -5),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: Icon(_isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, size: 60, color: Color(0xFFF8E9D2)),
-                          onPressed: _togglePlay,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => setState(() => _isHovered = true),
+                          onExit: (_) => setState(() => _isHovered = false),
+                          child: StatefulBuilder(
+                            builder: (context, setState) {
+                              return AnimatedContainer(
+                                duration: Duration(milliseconds: 150),
+                                transform:
+                                    Matrix4.identity()
+                                      ..translate(60.0, 60.0) // Move to center (half of max width/height)
+                                      ..scale(_isHovered ? 1.05 : 1.0)
+                                      ..translate(-60.0, -60.0), // Move back
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4A3F35),
+                                  boxShadow: [
+                                    BoxShadow(color: Color(0xFF4A3F35).withAlpha(77), blurRadius: _isHovered ? 25 : 20, spreadRadius: _isHovered ? 7 : 5),
+                                    BoxShadow(color: Color(0xFFF8E9D2).withAlpha(128), blurRadius: _isHovered ? 15 : 10, spreadRadius: _isHovered ? -7 : -5),
+                                  ],
+                                ),
+                                child: IconButton(
+                                  icon: Icon(_isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, size: 60, color: Color(0xFFF8E9D2)),
+                                  onPressed: _togglePlay,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(height: 40),
