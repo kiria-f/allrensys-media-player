@@ -13,15 +13,19 @@ class MusicPlayer {
   final _isPlayingController = StreamController<bool>.broadcast();
   final _positionController = StreamController<Duration>.broadcast();
   final _durationController = StreamController<Duration>.broadcast();
+  final _volumeController = StreamController<double>.broadcast();
 
   // Getters for streams
   Stream<bool> get isPlayingStream => _isPlayingController.stream;
   Stream<Duration> get positionStream => _positionController.stream;
   Stream<Duration> get durationStream => _durationController.stream;
+  Stream<double> get volumeStream => _volumeController.stream;
 
   MusicPlayer() {
     _setupListeners();
     _audioPlayer.setLoopMode(LoopMode.all); // Set infinite loop
+    _audioPlayer.setVolume(1.0); // Set initial volume to maximum
+    _volumeController.add(1.0);
   }
 
   void _setupListeners() {
@@ -68,10 +72,16 @@ class MusicPlayer {
     await _audioPlayer.seek(position);
   }
 
+  Future<void> setVolume(double volume) async {
+    await _audioPlayer.setVolume(volume);
+    _volumeController.add(volume);
+  }
+
   void dispose() {
     _audioPlayer.dispose();
     _isPlayingController.close();
     _positionController.close();
     _durationController.close();
+    _volumeController.close();
   }
 }

@@ -286,6 +286,48 @@ class _HomePageState extends State<HomePage> {
             ],
             isLeft: false,
           ),
+          // Volume control at bottom
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...List.generate(5, (index) {
+                    final volume = (index + 1) / 5.0;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: StreamBuilder<double>(
+                        stream: _musicPlayer.volumeStream,
+                        builder: (context, snapshot) {
+                          final currentVolume = snapshot.data ?? 1.0;
+                          final isActive = currentVolume >= volume;
+                          return MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () => _musicPlayer.setVolume(volume),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isActive ? Color(0xFF4A3F35) : Color(0xFF4A3F35).withAlpha(77),
+                                  boxShadow: [BoxShadow(color: Color(0xFF4A3F35).withAlpha(51), blurRadius: 4, spreadRadius: 0)],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
