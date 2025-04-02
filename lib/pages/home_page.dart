@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -295,6 +297,8 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const VolumeDotsAnimation(isLeft: true),
+                  const SizedBox(width: 16),
                   ...List.generate(5, (index) {
                     final volume = (index + 1) / 5.0;
                     return Padding(
@@ -324,6 +328,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   }),
+                  const SizedBox(width: 16),
+                  const VolumeDotsAnimation(isLeft: false),
                 ],
               ),
             ),
@@ -332,4 +338,74 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class VolumeDotsAnimation extends StatefulWidget {
+  final bool isLeft;
+
+  const VolumeDotsAnimation({super.key, required this.isLeft});
+
+  @override
+  State<VolumeDotsAnimation> createState() => _VolumeDotsAnimationState();
+}
+
+class _VolumeDotsAnimationState extends State<VolumeDotsAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(duration: const Duration(seconds: 2), vsync: this)..repeat();
+
+    _animation = Tween<double>(begin: 0, end: 2 * math.pi).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return CustomPaint(
+          size: const Size(32, 16),
+          painter: VolumeDotsPainter(animation: _animation.value, color: const Color(0xFF4A3F35).withAlpha(77), isLeft: widget.isLeft),
+        );
+      },
+    );
+  }
+}
+
+class VolumeDotsPainter extends CustomPainter {
+  final double animation;
+  final Color color;
+  final bool isLeft;
+
+  VolumeDotsPainter({required this.animation, required this.color, required this.isLeft});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint =
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.fill;
+
+    final centerY = size.height / 2;
+    final spacing = size.width / 3;
+    final radius = 2.0;
+
+    for (int i = 0; i < 3; i++) {
+      final x = isLeft ? i * spacing : size.width - (i * spacing);
+      final y = centerY + math.sin(animation + (i * math.pi / 2)) * 3;
+      canvas.drawCircle(Offset(x, y), radius, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(VolumeDotsPainter oldDelegate) => true;
 }
