@@ -59,7 +59,7 @@ jobs:
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Deploy with docker-compose
+      - name: Deploy with docker compose
         run: |
-          docker-compose pull
-          docker-compose up -d
+          docker compose pull
+          docker compose up -d
