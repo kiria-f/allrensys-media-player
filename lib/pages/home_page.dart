@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../music_player.dart';
+import '../widgets/wave_animation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -191,10 +192,18 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 40),
-                      Text(
-                        _isPlaying ? 'Now playing...' : 'Press play to begin your journey',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: Color(0xFF4A3F35).withAlpha(179), fontFamily: 'Montserrat'),
+                      SizedBox(
+                        height: 40, // Fixed height for both text and animation
+                        child:
+                            _isPlaying
+                                ? const Center(child: WaveAnimation())
+                                : Center(
+                                  child: Text(
+                                    'Press play to begin your journey',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16, color: Color(0xFF4A3F35).withAlpha(179), fontFamily: 'Montserrat'),
+                                  ),
+                                ),
                       ),
                     ],
                   ),
