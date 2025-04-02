@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="512" cy="512" r="512" fill="#F8E9D2"/>
+    
+    <!-- Musical note stem -->
+    <path d="M512 256V768" stroke="#4A3F35" stroke-width="48" stroke-linecap="round"/>
+    
+    <!-- Musical note head -->
+    <circle cx="512" cy="256" r="64" fill="#4A3F35"/>
+    
+    <!-- Letter A -->
+    <path d="M384 768L512 256L640 768" stroke="#4A3F35" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M448 576H576" stroke="#4A3F35" stroke-width="48" stroke-linecap="round"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="512" cy="512" r="384" stroke="#4A3F35" stroke-width="8" stroke-opacity="0.1"/>
+    <circle cx="512" cy="512" r="256" stroke="#4A3F35" stroke-width="8" stroke-opacity="0.1"/>
+</svg> 
