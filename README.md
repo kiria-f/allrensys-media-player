@@ -1,3 +1,3 @@
 # music_streamer
 
-A new Flutter project.
+Allrensys audio streamer.
