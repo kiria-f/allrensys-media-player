@@ -1,5 +1,5 @@
 # Use the official Flutter SDK image
-FROM flutter:stable
+FROM docker.io/flutter/flutter:stable
 
 # Create a non-root user
 RUN useradd -m -s /bin/bash flutter && \
