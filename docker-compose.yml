@@ -1,13 +1,13 @@
 services:
-  web:
+  media-player:
     image: ghcr.io/kiria-f/allrensys-media-player:latest
     networks:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.music-streamer.rule=Host(`allrensys.com`)"
-      - "traefik.http.routers.music-streamer.entrypoints=web"
-      - "traefik.http.services.music-streamer.loadbalancer.server.port=80"
+      - "traefik.http.routers.media-player.rule=Host(`allrensys.com`)"
+      - "traefik.http.routers.media-player.entrypoints=websecure"
+      - "traefik.http.services.media-player.loadbalancer.server.port=80"
     environment:
       - FLUTTER_WEB_RELEASE=true
     restart: unless-stopped
