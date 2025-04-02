@@ -2,7 +2,10 @@
 FROM cirrusci/flutter:stable
 
 # Create a non-root user
-RUN useradd -m -s /bin/bash flutter
+RUN useradd -m -s /bin/bash flutter && \
+    chown -R flutter:flutter /sdks/flutter && \
+    git config --global --add safe.directory /sdks/flutter
+
 USER flutter
 
 # Set working directory
