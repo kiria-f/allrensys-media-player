@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
     if (_isPlaying) {
       await _musicPlayer.pause();
     } else {
-      await _musicPlayer.play('assets/audio/lofi1.mp3');
+      await _musicPlayer.play('assets/audio/lofi4.mp3');
     }
   }
 
