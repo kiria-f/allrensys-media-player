@@ -1,11 +1,11 @@
 {
-    "name": "music_streamer",
-    "short_name": "music_streamer",
+    "name": "Allrensys Music Player",
+    "short_name": "Allrensys",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Your music companion",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
